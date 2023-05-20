@@ -146,7 +146,7 @@ public partial class @PlayerInputMap: IInputActionCollection2, IDisposable
                     ""type"": ""Button"",
                     ""id"": ""2ee48d46-65af-4f5c-ab46-2e27c71a4da9"",
                     ""expectedControlType"": ""Button"",
-                    ""processors"": """",
+                    ""processors"": ""AxisDeadzone"",
                     ""interactions"": """",
                     ""initialStateCheck"": false
                 },
@@ -155,7 +155,7 @@ public partial class @PlayerInputMap: IInputActionCollection2, IDisposable
                     ""type"": ""Button"",
                     ""id"": ""9feb7501-148c-4df3-ae14-42f4c703056d"",
                     ""expectedControlType"": ""Button"",
-                    ""processors"": """",
+                    ""processors"": ""AxisDeadzone"",
                     ""interactions"": """",
                     ""initialStateCheck"": false
                 },
