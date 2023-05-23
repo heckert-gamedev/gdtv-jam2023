@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6294685235613016815}
   - component: {fileID: 4607852776105743885}
   - component: {fileID: 1038086508937351682}
-  - component: {fileID: 5936590238803913042}
+  - component: {fileID: 8896743979667836463}
   m_Layer: 0
   m_Name: TestDummy_Player
   m_TagString: Untagged
@@ -36,7 +36,7 @@ Transform:
   m_Children:
   - {fileID: 1268129921041698589}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &575516920153089983
 MeshFilter:
@@ -150,7 +150,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isOrthogonalMovement: 1
   moveVector: {x: 0, y: 0, z: 0}
---- !u!114 &5936590238803913042
+--- !u!114 &8896743979667836463
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -159,10 +159,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 5138238230413775332}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be9d0156b9828c03fa23dc1baeefcd6a, type: 3}
+  m_Script: {fileID: 11500000, guid: 5b9c3a9e39f312cddb0997444f1b6939, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 10
+  moveSpeed: 5
+  movedDelay: 1
+  gameFlowManager: {fileID: 0}
+  gridsize: {x: 6, y: 6}
 --- !u!1001 &3518353588557678098
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -226,6 +229,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2491813434112782025, guid: 7e2d576020ff95b7cb74fa46bcf6d532,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: b491c9b01c0121a9992d8aa5a322422d, type: 2}
     - target: {fileID: 8208070854966459550, guid: 7e2d576020ff95b7cb74fa46bcf6d532,
         type: 3}
       propertyPath: m_Name
