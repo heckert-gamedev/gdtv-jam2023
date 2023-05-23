@@ -12,6 +12,8 @@ namespace Jam
 
         public Vector3 moveVector;
 
+        public bool isAttemptingAttack;
+
 
         private void Awake()
         {
@@ -33,6 +35,7 @@ namespace Jam
             else
             {
                 inputActions.Movement.Move.performed += _ => OnMoveDirectionAction();
+                inputActions.Movement.Trigger.performed += _ => OnTriggerAction();
             }
 
         }
@@ -83,6 +86,16 @@ namespace Jam
             float moveInput = inputActions.OrthogonalMovement.LeftRight.ReadValue<float>();
             moveVector.x = moveInput;
             moveVector.z = 0f;
+        }
+
+        void OnTriggerAction()
+        {
+            if (!isAttemptingAttack) isAttemptingAttack = true;
+        }
+
+        public void StopAttemptingAttack()
+        {
+            isAttemptingAttack = false;
         }
 
     }
