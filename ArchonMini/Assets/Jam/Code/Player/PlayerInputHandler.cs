@@ -12,7 +12,8 @@ namespace Jam
 
         public Vector3 moveVector;
 
-        public bool isAttemptingAttack;
+        public bool isPressingTriggerBoard;
+        public bool isPressingTriggerBattle;
 
 
         private void Awake()
@@ -31,15 +32,17 @@ namespace Jam
                 inputActions.OrthogonalMovement.UpDown.canceled += _ => OnStopMovementAction();
                 inputActions.OrthogonalMovement.LeftRight.performed += _ => OnLeftRightAction();
                 inputActions.OrthogonalMovement.LeftRight.canceled += _ => OnStopMovementAction();
+                inputActions.OrthogonalMovement.Trigger.performed += _ => OnBoardTriggerAction();
+                inputActions.OrthogonalMovement.Trigger.canceled += _ => OnStopBoardTriggerAction();
             }
             else
             {
                 inputActions.Movement.Move.performed += _ => OnMoveDirectionAction();
-                inputActions.Movement.Trigger.performed += _ => OnTriggerAction();
+                inputActions.Movement.Trigger.performed += _ => OnBattleTriggerAction();
+                inputActions.Movement.Trigger.canceled += _ => OnStopBattleTriggerAction();
             }
 
         }
-
 
         private void OnDisable()
         {
@@ -49,10 +52,14 @@ namespace Jam
                 inputActions.OrthogonalMovement.UpDown.canceled -= _ => OnStopMovementAction();
                 inputActions.OrthogonalMovement.LeftRight.performed -= _ => OnLeftRightAction();
                 inputActions.OrthogonalMovement.LeftRight.canceled -= _ => OnStopMovementAction();
+                inputActions.OrthogonalMovement.Trigger.performed -= _ => OnBoardTriggerAction();
+                inputActions.OrthogonalMovement.Trigger.canceled -= _ => OnStopBoardTriggerAction();
             }
             else
             {
                 inputActions.Movement.Move.performed -= _ => OnMoveDirectionAction();
+                inputActions.Movement.Trigger.performed -= _ => OnBattleTriggerAction();
+                inputActions.Movement.Trigger.canceled -= _ => OnStopBattleTriggerAction();
             }
 
             inputActions.Disable();
@@ -88,14 +95,24 @@ namespace Jam
             moveVector.z = 0f;
         }
 
-        void OnTriggerAction()
+        void OnBattleTriggerAction()
         {
-            if (!isAttemptingAttack) isAttemptingAttack = true;
+            isPressingTriggerBattle = true;
         }
 
-        public void StopAttemptingAttack()
+        void OnBoardTriggerAction()
         {
-            isAttemptingAttack = false;
+
+        }
+
+        void OnStopBattleTriggerAction()
+        {
+            isPressingTriggerBattle = false;
+        }
+
+        void OnStopBoardTriggerAction()
+        {
+
         }
 
     }

@@ -10,8 +10,14 @@ namespace Jam
         [SerializeField] GameObject enemy;
         [SerializeField] float playerHealth;
         [SerializeField] float enemyHealth;
+        [SerializeField] Material playerMaterial;
+        [SerializeField] Material enemyMaterial;
+        [SerializeField] Material damageMaterial;
 
         PlayerInputHandler inputHandler;
+
+        bool isPlayerAttacking = false;
+        bool isEnemyAttacking = false;
 
         // Awake is called when the script object is initialized
         private void Awake()
@@ -28,7 +34,7 @@ namespace Jam
         // Update is called once per frame
         private void Update()
         {
-            if(inputHandler.isAttemptingAttack)
+            if(inputHandler.isPressingTriggerBattle)
             {
                 PlayerAttack();
             }
@@ -36,8 +42,22 @@ namespace Jam
 
         private void PlayerAttack()
         {
+            if(isPlayerAttacking) return;
+            isPlayerAttacking = true;
             DamageEnemy();
-            inputHandler.StopAttemptingAttack();
+            isPlayerAttacking = false;
+        }
+        
+
+        private void DamageEnemy()
+        {
+            StartCoroutine(HurtEnemyAnimation());
+        }
+
+
+        private void DamagePlayer()
+        {
+            StartCoroutine(HurtPlayerAnimation());
         }
 
         private void EnemyAttack()
@@ -45,16 +65,29 @@ namespace Jam
             DamagePlayer();
         }
 
-        private void DamagePlayer()
-        {
-
-        }
-
-        private void DamageEnemy()
-        {
-
-        }
-
         
+        private IEnumerator HurtPlayerAnimation()
+        {
+            MeshRenderer mr = player.GetComponent<MeshRenderer>();
+            Material[] mats = mr.materials;
+            mats[0] = damageMaterial;
+            mr.materials = mats;
+            yield return new WaitForSeconds(0.5f);
+            mats[0] = playerMaterial;
+            mr.materials = mats;
+        }
+
+        private IEnumerator HurtEnemyAnimation()
+        {
+            MeshRenderer mr = enemy.GetComponent<MeshRenderer>();
+            Material[] mats = mr.materials;
+            mats[0] = damageMaterial;
+            mr.materials = mats;
+            yield return new WaitForSeconds(0.5f);
+            mats[0] = enemyMaterial;
+            mr.materials = mats;
+        }
+
+
     }
 }
