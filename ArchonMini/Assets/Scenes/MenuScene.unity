@@ -2609,7 +2609,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Name of the Game
+  m_text: TileFighters
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c02705360a90dd24bb07d8963eede8ab, type: 2}
   m_sharedMaterial: {fileID: -6714334045650688776, guid: c02705360a90dd24bb07d8963eede8ab,
