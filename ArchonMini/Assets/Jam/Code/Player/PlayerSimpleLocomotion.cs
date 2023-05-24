@@ -25,7 +25,7 @@ namespace Jam
         void Update()
         {
             Vector3 myPosition = rb.position;
-            rb.MovePosition(myPosition + (moveSpeed * Time.deltaTime) * inputHandler.moveVector);
+            rb.MovePosition(myPosition + (moveSpeed * Time.deltaTime) * inputHandler.i_moveVector);
         }
 
 

@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 1404390299733882593}
   - component: {fileID: 548867374354664131}
   - component: {fileID: 5027866421003150798}
+  - component: {fileID: 8477455265105942293}
+  - component: {fileID: 1723668522326067937}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -133,6 +135,35 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &8477455265105942293
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 119790999250286919}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58ea6c96f9aacb04f9d2795851268b21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 10
+  material: {fileID: 2100000, guid: 725b7c5dd0989bc49bd1009471c3a305, type: 2}
+  hurtMaterial: {fileID: 2100000, guid: 7d19ac4e3464e0f45bc2413d472c8d96, type: 2}
+  isPlayer: 0
+  battleHandler: {fileID: 0}
+--- !u!114 &1723668522326067937
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 119790999250286919}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a99db9a33741ba4590d592ab09b0acf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &176005131214406992
 GameObject:
   m_ObjectHideFlags: 0
@@ -182,13 +213,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a45651820b0e5c14aaa635fb23679fd9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 6170481665215052794}
-  enemy: {fileID: 119790999250286919}
-  playerHealth: 0
-  enemyHealth: 0
-  playerMaterial: {fileID: 2100000, guid: 070b6cce03ea9c748912331b16f38c0d, type: 2}
-  enemyMaterial: {fileID: 2100000, guid: 725b7c5dd0989bc49bd1009471c3a305, type: 2}
-  damageMaterial: {fileID: 2100000, guid: 7d19ac4e3464e0f45bc2413d472c8d96, type: 2}
+  firstCombatant: {fileID: 6170481665215052794}
+  secondCombatant: {fileID: 119790999250286919}
 --- !u!1 &4340831879910806516
 GameObject:
   m_ObjectHideFlags: 0
@@ -459,6 +485,7 @@ GameObject:
   - component: {fileID: 3087265284455018017}
   - component: {fileID: 8093283052702369112}
   - component: {fileID: 1025746876446907027}
+  - component: {fileID: 3385107422210389139}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -592,9 +619,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isOrthogonalMovement: 0
-  moveVector: {x: 0, y: 0, z: 0}
-  isPressingTriggerBoard: 0
-  isPressingTriggerBattle: 0
 --- !u!114 &1025746876446907027
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -608,6 +632,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 10
+--- !u!114 &3385107422210389139
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6170481665215052794}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58ea6c96f9aacb04f9d2795851268b21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 10
+  material: {fileID: 2100000, guid: 070b6cce03ea9c748912331b16f38c0d, type: 2}
+  hurtMaterial: {fileID: 2100000, guid: 7d19ac4e3464e0f45bc2413d472c8d96, type: 2}
+  isPlayer: 1
+  battleHandler: {fileID: 0}
 --- !u!1001 &2884891815739767008
 PrefabInstance:
   m_ObjectHideFlags: 0

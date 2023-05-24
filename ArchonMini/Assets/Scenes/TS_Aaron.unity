@@ -136,21 +136,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: BattlePhase
       objectReference: {fileID: 0}
-    - target: {fileID: 1252508047970115876, guid: fabd11b06ab6c904d94deaf04e3d2f56,
-        type: 3}
-      propertyPath: enemyMaterial
-      value: 
-      objectReference: {fileID: 2100000, guid: 725b7c5dd0989bc49bd1009471c3a305, type: 2}
-    - target: {fileID: 1252508047970115876, guid: fabd11b06ab6c904d94deaf04e3d2f56,
-        type: 3}
-      propertyPath: damageMaterial
-      value: 
-      objectReference: {fileID: 2100000, guid: 7d19ac4e3464e0f45bc2413d472c8d96, type: 2}
-    - target: {fileID: 1252508047970115876, guid: fabd11b06ab6c904d94deaf04e3d2f56,
-        type: 3}
-      propertyPath: playerMaterial
-      value: 
-      objectReference: {fileID: 2100000, guid: 070b6cce03ea9c748912331b16f38c0d, type: 2}
     - target: {fileID: 4797651813068087620, guid: fabd11b06ab6c904d94deaf04e3d2f56,
         type: 3}
       propertyPath: m_RootOrder

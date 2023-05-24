@@ -4,16 +4,19 @@ using UnityEngine;
 
 namespace Jam
 {
-    public class PlayerInputHandler : MonoBehaviour
+    public class PlayerInputHandler : MonoBehaviour, IInputHandler
     {
         [SerializeField] bool isOrthogonalMovement = true;
 
         PlayerInputMap inputActions;
 
-        public Vector3 moveVector;
+        Vector3 moveVector;
+        bool isPressingTriggerBoard;
+        bool isPressingTriggerBattle;
 
-        public bool isPressingTriggerBoard;
-        public bool isPressingTriggerBattle;
+        public Vector3 i_moveVector { get { return moveVector; } }
+        public bool i_isPressingTriggerBoard { get { return isPressingTriggerBoard; } }
+        public bool i_isPressingTriggerBattle { get { return isPressingTriggerBattle; } }
 
 
         private void Awake()
@@ -112,7 +115,6 @@ namespace Jam
 
         void OnStopBoardTriggerAction()
         {
-
         }
 
     }
