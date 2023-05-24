@@ -8,6 +8,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 1
+    path: Assets/Scenes/TS_Heckert.unity
+    guid: d88788a1e94e85ba98cd19d68104a44a
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: b1354421cf146668fb0793eabd847cc8,
       type: 2}

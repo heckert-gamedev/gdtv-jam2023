@@ -27,11 +27,18 @@ namespace Jam
 
         private IEnumerator Start()
         {
-            fader.FadeOutImmediate();
-            yield return new WaitForSeconds(timeToWaitForGameStart);
-            //audioManager.PlayMenuMusic();
-            //mainMenuUI.IntroSequence?.gameObject.SetActive(enabled);
-            mainMenuUI.IntroSequence?.Begin(fader);
+            // When testing the main menu might not be the first scene to run and in this case the
+            // Core prefab (and thus the MySceneManager) gets spawned and we have no mainMenuUI nor
+            // any intro sequence...
+            if (null != mainMenuUI)
+            {
+                fader.FadeOutImmediate();
+                yield return new WaitForSeconds(timeToWaitForGameStart);
+                //audioManager.PlayMenuMusic();
+                //mainMenuUI.IntroSequence?.gameObject.SetActive(enabled);
+                mainMenuUI.IntroSequence?.Begin(fader);
+            }
+            //else { Debug.Log(($"Info: {name} spawned outside main menu scene")); }
         }
 
 
