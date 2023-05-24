@@ -26,6 +26,7 @@ namespace Jam
 
         bool isMovingSelf;
         bool isMovingPiece;
+        bool isSelectingPieceMove;
 
         GameObject _currentPiece;
         Vector3 _moveStart;
@@ -43,18 +44,24 @@ namespace Jam
             rb = GetComponent<Rigidbody>();
             playerMesh = GetComponentInChildren<Transform>();
             inputHandler = GetComponent<PlayerInputHandler>();
+            isSelectingPieceMove = false;
         }
 
 
         void Update()
         {
-            if ((GameFlowState.PlayerCanMove == gameFlowManager.GameFlowState)
+            if(inputHandler.isPressingTriggerBoard)
+            {
+                gameFlowManager.OpenSceneForBattlefield();
+            }
+
+            if((GameFlowState.PlayerCanMove == gameFlowManager.GameFlowState)
                 || (GameFlowState.PlayerMoves == gameFlowManager.GameFlowState))
             {
                 MoveSelf();
             }
 
-            if (isMovingPiece)
+            if(isMovingPiece)
             {
                 MovePiece();
             }
@@ -81,6 +88,7 @@ namespace Jam
         {
             if (GameFlowState.PlayerCanMove == gameFlowManager.GameFlowState)
             {
+                isSelectingPieceMove = true;
                 if (MovingIsValid())
                 {
                     gameFlowManager.SetState(GameFlowState.PlayerMoves);
@@ -110,7 +118,23 @@ namespace Jam
 
         void MovePiece()
         {
+            /*if(GameFlowState.PlayerCanMove == gameFlowManager.GameFlowState)
+            {
+                if()
+                {
+                    gameFlowManager.SetState(GameFlowState.PlayerMoves);
+                    isSelectingPieceMove = true;
+                }
+                else
+                {
 
+                }
+            }
+            else
+            if(GameFlowState.PlayerMoves == gameFlowManager.GameFlowState)
+            {
+                
+            }*/
         }
 
 
