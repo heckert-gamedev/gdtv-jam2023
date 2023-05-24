@@ -72,9 +72,11 @@ Debug.Log("CreateBoard");
                 Debug.Log($"position {i}, 0 ");
                 Debug.Log($"tile {grid[i,0].cellObject.name}");
                 grid[i, 0].piece = Instantiate(_piece, grid[i, 0].cellObject.transform.position, Quaternion.identity);
+                grid[i, 0].piece.transform.parent = gameObject.transform;
                 Debug.Log($"position {i}, {last} ");
                 Debug.Log($" {grid[i,last].cellObject.name}");
                 grid[i, last].piece = Instantiate(_piece, grid[i, last].cellObject.transform.position, Quaternion.identity);
+                grid[i, last].piece.transform.parent = gameObject.transform;
 
                 //grid[0, i].piece.transform.parent = gameObject.transform;
                 //grid[0, i].piece.transform.position = new Vector3((transform.position.x + i) * _cell.transform.localScale.x, 0.2F, transform.position.z * _cell.transform.localScale.z);

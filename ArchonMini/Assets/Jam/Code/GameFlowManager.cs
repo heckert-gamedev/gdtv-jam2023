@@ -18,6 +18,9 @@ namespace Jam
         [SerializeField] GameObject boardPlayer;
         [SerializeField] GameObject battlePlayer;
 
+        [Header("Battle Phase")]
+        [SerializeField] GameObject battlePhase;
+
 
         GameFlowState gameFlowState = GameFlowState.Idle;
 
@@ -51,6 +54,8 @@ namespace Jam
 
         private void OpenSceneForBoardGame(bool withTransition = false)
         {
+            boardInstance.SetActive(true);
+            boardPlayer?.SetActive(true);
             // battleInstance?.SetActive(false);
             // battlePlayer?.SetActive(false);
 
@@ -70,10 +75,16 @@ namespace Jam
 
         public void OpenSceneForBattlefield()
         {
+            Debug.Log("Battle!");
+
             boardInstance?.SetActive(false);
             boardPlayer?.SetActive(false);
+
+            battlePhase?.SetActive(true);
+            battleInstance?.SetActive(true);
+            //boardPlayer?.SetActive(false);
             // Transition goes here
-            //battleInstance?.SetActive(true);
+
             //battlePlayer?.SetActive(true);
 
             //battleInstance?.BattleEnded += _ => OnBattleEnded();
@@ -84,6 +95,8 @@ namespace Jam
         void OnBattleEnded()
         {
             // Resolve outcome
+            battlePhase?.SetActive(false);
+            battleInstance?.SetActive(false);
 
             // switch back to board game, with transition
             OpenSceneForBoardGame(true);

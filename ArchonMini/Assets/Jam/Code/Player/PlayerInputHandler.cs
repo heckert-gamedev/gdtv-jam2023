@@ -105,7 +105,7 @@ namespace Jam
 
         void OnBoardTriggerAction()
         {
-
+            m_isPressingTriggerBoard = true;
         }
 
         void OnStopBattleTriggerAction()
@@ -115,6 +115,7 @@ namespace Jam
 
         void OnStopBoardTriggerAction()
         {
+            m_isPressingTriggerBoard = false;
         }
 
     }
