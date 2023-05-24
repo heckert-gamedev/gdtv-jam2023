@@ -114,6 +114,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2399009591742400783}
+  - component: {fileID: 108152038498975926}
   m_Layer: 0
   m_Name: BoardTile
   m_TagString: Untagged
@@ -139,6 +140,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &108152038498975926
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8208070854966459550}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed267156f38ef8e47ab81f0c64796dc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cellInfo:
+    piece: {fileID: 0}
+    cellObject: {fileID: 0}
+    highlightMat: {fileID: 0}
+    origin: {fileID: 2100000, guid: 09a78baeb589ef843939bf0a09da38fc, type: 2}
 --- !u!1001 &5542091518261112137
 PrefabInstance:
   m_ObjectHideFlags: 0

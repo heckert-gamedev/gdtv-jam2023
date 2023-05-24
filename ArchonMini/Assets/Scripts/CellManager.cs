@@ -20,6 +20,7 @@ namespace Jam
             cell.GetComponent<CellManager>().SetCell(this);
         }
 
+        [Header("Assign materials")]
         public Material highlightMat;
         public Material origin;
 
