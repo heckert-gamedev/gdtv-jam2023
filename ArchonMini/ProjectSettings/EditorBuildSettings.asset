@@ -6,11 +6,11 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
-    guid: 99c9720ab356a0642a771bea13969a05
+    path: Assets/Scenes/MenuScene.unity
+    guid: e31e5e280f395f1829d567fd849a7098
   - enabled: 1
-    path: Assets/Scenes/TS_Heckert.unity
-    guid: d88788a1e94e85ba98cd19d68104a44a
+    path: Assets/Scenes/TS_Board&Battle.unity
+    guid: 1fb15f49b5dd73b408cc0a92f37d1448
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: b1354421cf146668fb0793eabd847cc8,
       type: 2}
