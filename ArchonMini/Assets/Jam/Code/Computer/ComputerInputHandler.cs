@@ -6,20 +6,20 @@ namespace Jam
 {
     public class ComputerInputHandler : MonoBehaviour, IInputHandler
     {
-        Vector3 moveVector;
-        bool isPressingTriggerBoard;
-        bool isPressingTriggerBattle;
+        Vector3 m_moveVector;
+        bool m_isPressingTriggerBoard;
+        bool m_isPressingTriggerBattle;
 
 
-        public Vector3 i_moveVector { get { return moveVector; } }
-        public bool i_isPressingTriggerBoard { get { return isPressingTriggerBoard; } }
-        public bool i_isPressingTriggerBattle { get { return isPressingTriggerBattle; } }
+        public Vector3 moveVector { get { return m_moveVector; } }
+        public bool isPressingTriggerBoard { get { return m_isPressingTriggerBoard; } }
+        public bool isPressingTriggerBattle { get { return m_isPressingTriggerBattle; } }
 
         void Awake()
         {
-            moveVector = Vector3.zero;
-            isPressingTriggerBoard = false;
-            isPressingTriggerBattle = false;
+            m_moveVector = Vector3.zero;
+            m_isPressingTriggerBoard = false;
+            m_isPressingTriggerBattle = false;
         }
 
         void Start()

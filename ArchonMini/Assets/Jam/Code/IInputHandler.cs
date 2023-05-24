@@ -6,9 +6,9 @@ namespace Jam
 {
     public interface IInputHandler
     {
-        public Vector3 i_moveVector { get; }
+        public Vector3 moveVector { get; }
 
-        public bool i_isPressingTriggerBoard { get; }
-        public bool i_isPressingTriggerBattle { get; }
+        public bool isPressingTriggerBoard { get; }
+        public bool isPressingTriggerBattle { get; }
     }
 }

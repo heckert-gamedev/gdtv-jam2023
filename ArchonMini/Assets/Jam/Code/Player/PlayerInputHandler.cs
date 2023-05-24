@@ -10,13 +10,13 @@ namespace Jam
 
         PlayerInputMap inputActions;
 
-        Vector3 moveVector;
-        bool isPressingTriggerBoard;
-        bool isPressingTriggerBattle;
+        Vector3 m_moveVector;
+        bool m_isPressingTriggerBoard;
+        bool m_isPressingTriggerBattle;
 
-        public Vector3 i_moveVector { get { return moveVector; } }
-        public bool i_isPressingTriggerBoard { get { return isPressingTriggerBoard; } }
-        public bool i_isPressingTriggerBattle { get { return isPressingTriggerBattle; } }
+        public Vector3 moveVector { get { return m_moveVector; } }
+        public bool isPressingTriggerBoard { get { return m_isPressingTriggerBoard; } }
+        public bool isPressingTriggerBattle { get { return m_isPressingTriggerBattle; } }
 
 
         private void Awake()
@@ -71,36 +71,36 @@ namespace Jam
 
         void OnStopMovementAction()
         {
-            moveVector = Vector3.zero;
+            m_moveVector = Vector3.zero;
         }
 
 
         void OnMoveDirectionAction()
         {
             Vector2 moveInput = inputActions.Movement.Move.ReadValue<Vector2>();
-            moveVector.x = moveInput.x;
-            moveVector.z = moveInput.y;
+            m_moveVector.x = moveInput.x;
+            m_moveVector.z = moveInput.y;
         }
 
 
         void OnUpDownAction()
         {
             float moveInput = inputActions.OrthogonalMovement.UpDown.ReadValue<float>();
-            moveVector.x = 0f;
-            moveVector.z = moveInput;
+            m_moveVector.x = 0f;
+            m_moveVector.z = moveInput;
         }
 
 
         void OnLeftRightAction()
         {
             float moveInput = inputActions.OrthogonalMovement.LeftRight.ReadValue<float>();
-            moveVector.x = moveInput;
-            moveVector.z = 0f;
+            m_moveVector.x = moveInput;
+            m_moveVector.z = 0f;
         }
 
         void OnBattleTriggerAction()
         {
-            isPressingTriggerBattle = true;
+            m_isPressingTriggerBattle = true;
         }
 
         void OnBoardTriggerAction()
@@ -110,7 +110,7 @@ namespace Jam
 
         void OnStopBattleTriggerAction()
         {
-            isPressingTriggerBattle = false;
+            m_isPressingTriggerBattle = false;
         }
 
         void OnStopBoardTriggerAction()

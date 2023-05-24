@@ -28,7 +28,7 @@ namespace Jam
 
         void Update()
         {
-            if(inputHandler.i_isPressingTriggerBattle)
+            if(inputHandler.isPressingTriggerBattle)
             {
                 Attack();
             }
