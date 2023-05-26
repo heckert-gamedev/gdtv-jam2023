@@ -5,20 +5,17 @@ using UnityEngine;
 namespace Jam
 {
 
-    public enum GameFlowState { Idle, PlayerCanMove, PlayerMoves, OpponentCanMove, OpponentMoves, BattleMode }
+    public enum GameFlowState { Idle, PlayerCanMove, PlayerMovesSelf, PlayerSelectsMove, PlayerSelectsMoveAndMovesSelf, PlayerMovesPiece, OpponentCanMove, OpponentMovesPiece, BattleMode }
 
     public class GameFlowManager : MonoBehaviour
     {
 
-        [Header("Board and Battlefield")]
-        [SerializeField] GameObject boardInstance;
+        [Header("Boards")]
+        public GameObject boardInstance;
         [SerializeField] GameObject battleInstance;
 
-        [Header("Player objects")]
+        [Header("Active objects")]
         [SerializeField] GameObject boardPlayer;
-        [SerializeField] GameObject battlePlayer;
-
-        [Header("Battle Phase")]
         [SerializeField] GameObject battlePhase;
 
 
@@ -54,71 +51,67 @@ namespace Jam
 
         private void OpenSceneForBoardGame(bool withTransition = false)
         {
-            boardInstance.SetActive(true);
+            // Unsubscribe event
+            BattleHandler.battleEnded -= OnBattleEnded;
+
+            battlePhase?.SetActive(false);
+            battleInstance?.SetActive(false);
+
+            boardInstance?.SetActive(true);
             boardPlayer?.SetActive(true);
-            // battleInstance?.SetActive(false);
-            // battlePlayer?.SetActive(false);
 
             if (withTransition)
             {
                 Debug.Log($"battle->board transition requested");
                 // Do Transition
             }
-
-            boardInstance?.SetActive(true);
-            boardPlayer?.SetActive(true);
-
-            //battleInstance?.BattleEnded -= _ => OnBattleEnded();
-            gameFlowState = GameFlowState.PlayerCanMove;
+            
+            SetState(GameFlowState.PlayerCanMove);
         }
 
 
-        public void OpenSceneForBattlefield()
+        public void OpenSceneForBattlefield(bool withTransition = false)
         {
-            Debug.Log("Battle!");
+            // Subscribe event
+            BattleHandler.battleEnded += OnBattleEnded;
 
             boardInstance?.SetActive(false);
             boardPlayer?.SetActive(false);
 
             battlePhase?.SetActive(true);
             battleInstance?.SetActive(true);
-            //boardPlayer?.SetActive(false);
-            // Transition goes here
 
-            //battlePlayer?.SetActive(true);
+            if(withTransition)
+            {
+                Debug.Log($"board->battle transition requested");
+                // Do Transition
+            }
 
-            //battleInstance?.BattleEnded += _ => OnBattleEnded();
-
-            gameFlowState = GameFlowState.BattleMode;
+            SetState(GameFlowState.BattleMode);
         }
 
         void OnBattleEnded()
         {
             // Resolve outcome
-            battlePhase?.SetActive(false);
-            battleInstance?.SetActive(false);
 
-            // switch back to board game, with transition
+            // Switch back to board game, with transition
             OpenSceneForBoardGame(true);
         }
 
 
         public void SetState(GameFlowState newFlowState)
         {
-            if (
-                (GameFlowState.PlayerMoves == gameFlowState && GameFlowState.OpponentCanMove == newFlowState)
-                ||
-                (GameFlowState.PlayerCanMove == gameFlowState && GameFlowState.PlayerMoves == newFlowState))
+            gameFlowState = newFlowState;
+            if(gameFlowState == GameFlowState.OpponentCanMove)
             {
-                gameFlowState = newFlowState;
-                StartCoroutine(DummyOponent()); // testing it!
-                return;
+                gameFlowState = GameFlowState.PlayerCanMove;
+                //StartCoroutine(DummyOpponent());
             }
         }
 
 
         // Just a mock to reset the state after a moment!
-        IEnumerator DummyOponent()
+        IEnumerator DummyOpponent()
         {
             yield return new WaitForSeconds(1f);
             gameFlowState = GameFlowState.PlayerCanMove;

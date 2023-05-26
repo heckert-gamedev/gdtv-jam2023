@@ -13,7 +13,6 @@ namespace Jam
         [SerializeField] private GameObject _piece;
         [SerializeField] private Material _highlight;
 
-        //These variables will be populated by board interaction procedure.
         private BoardCell from;
         private BoardCell to;
 
@@ -37,28 +36,12 @@ namespace Jam
 
             Vector2Int cellPos = new Vector2Int();
 
-Debug.Log("CreateBoard");
             foreach (Transform gridCell in transform)
             {
                 cellPos.x = (int)gridCell.position.x;
                 cellPos.y = (int)gridCell.position.z;
-                Debug.Log($"pos {cellPos.x}, {cellPos.y}");
                 grid[cellPos.x, cellPos.y] = new BoardCell(null, gridCell.gameObject, _highlight);
             }
-
-            /*            
-            for (int i = 0; i < yl; i++)
-            {
-                for (int y = 0; y < xl; y++)
-                {
-                    grid[i, y] = new BoardCell(null, Instantiate(_cell), _highlight);
-                    grid[i, y].cellObject.transform.parent = gameObject.transform;
-                    grid[i, y].cellObject.transform.position = new Vector3((transform.position.x + y) * _cell.transform.localScale.x, 0F, (transform.position.z + i) * _cell.transform.localScale.z);
-                }
-            }
-            */
-
-            Debug.Log($"{grid}");
 
             AddPieces();
         }
@@ -69,27 +52,11 @@ Debug.Log("CreateBoard");
 
             for (int i = 0; i < _dimensions.x; i++)
             {
-                Debug.Log($"position {i}, 0 ");
-                Debug.Log($"tile {grid[i,0].cellObject.name}");
                 grid[i, 0].piece = Instantiate(_piece, grid[i, 0].cellObject.transform.position, Quaternion.identity);
                 grid[i, 0].piece.transform.parent = gameObject.transform;
-                Debug.Log($"position {i}, {last} ");
-                Debug.Log($" {grid[i,last].cellObject.name}");
                 grid[i, last].piece = Instantiate(_piece, grid[i, last].cellObject.transform.position, Quaternion.identity);
                 grid[i, last].piece.transform.parent = gameObject.transform;
-
-                //grid[0, i].piece.transform.parent = gameObject.transform;
-                //grid[0, i].piece.transform.position = new Vector3((transform.position.x + i) * _cell.transform.localScale.x, 0.2F, transform.position.z * _cell.transform.localScale.z);
             }
-
-            /*
-            for (int i = 0; i < _dimensions.y; i++)
-            {
-                var p = Instantiate(_piece);
-                //p.transform.parent = gameObject.transform;
-                //p.transform.position = new Vector3((transform.position.x + i) * _cell.transform.localScale.x, 0.2F, (transform.position.z + last) * _cell.transform.localScale.z);
-            }
-            */
         }
 
         private void HighlightPossibleMove()
@@ -100,6 +67,20 @@ Debug.Log("CreateBoard");
         public void MovePiece(BoardCell from, BoardCell to)
         {
 
+        }
+
+        public void RemovePiece(BoardCell cell)
+        {
+
+        }
+
+        public bool CheckMove(Vector2Int start, Vector2Int end)
+        {
+            if(Mathf.Abs(start.x - end.x) == 1 && Mathf.Abs(start.y - end.y) == 1)
+            {
+                return true;
+            }
+            else return false;
         }
     }
 }
