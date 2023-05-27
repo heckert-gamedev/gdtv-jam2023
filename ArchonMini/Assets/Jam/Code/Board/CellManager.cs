@@ -10,12 +10,15 @@ namespace Jam
         [SerializeField] public GameObject piece;
         [SerializeField] public GameObject cellObject;
 
-        public BoardCell(GameObject p, GameObject cell, Material mat)
+        public bool containsPlayerPiece;
+
+        public BoardCell(GameObject p, GameObject cell, Material mat, bool isPlayerPiece)
         {
             piece = p;
             cellObject = cell;
             highlightMat = mat;
             origin = null;
+            this.containsPlayerPiece = isPlayerPiece;
 
             cell.GetComponent<CellManager>().SetCell(this);
         }

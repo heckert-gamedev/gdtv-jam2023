@@ -10,16 +10,18 @@ namespace Jam
         [SerializeField] Material material;
         [SerializeField] Material hurtMaterial;
         [SerializeField] bool isPlayer;
-        bool isAttacking;
         
         IInputHandler inputHandler;
 
         public BattleHandler battleHandler;
 
+        public GameObject attackBox;
+
         private void Awake()
         {
             if(isPlayer) inputHandler = GetComponent<PlayerInputHandler>();
             else inputHandler = GetComponent<ComputerInputHandler>();
+            attackBox = transform.GetChild(0).gameObject;
         }
 
         void Start()
@@ -40,24 +42,29 @@ namespace Jam
             Material[] mats = mr.materials;
             mats[0] = hurtMaterial;
             mr.materials = mats;
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.25f);
             mats[0] = material;
             mr.materials = mats;
         }
 
-        private void TakeDamage(float damage)
+        public void TakeDamage(float damage)
         {
             health -= damage;
             StartCoroutine(HurtAnimation());
             if(health <= 0f) Debug.Log("Battle end");
         }
 
+        IEnumerator DisableAttackBox()
+        {
+            yield return new WaitForSeconds(0.05f);
+            attackBox.SetActive(false);
+        }
+
         private void Attack()
         {
-            if(isAttacking) return;
-            isAttacking = true;
-            //DamageEnemy(enemy);
-            isAttacking = false;
+            if(attackBox.activeSelf) return;
+            attackBox.SetActive(true);
+            StartCoroutine(DisableAttackBox());
         }
     }
 }

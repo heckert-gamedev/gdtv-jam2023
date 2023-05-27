@@ -91,8 +91,9 @@ namespace Jam
                 if(inputHandler.isPressingTriggerBoard)
                 {
                     SetMaterial(selectingMaterial);
-                    from.x = player.x;
-                    from.y = player.y;
+                    from.x = Mathf.RoundToInt(playerMesh.position.x);
+                    from.y = Mathf.RoundToInt(playerMesh.position.z);
+                    //Debug.Log("From: " + from);
                     StartCoroutine(DelayStateChange(GameFlowState.PlayerSelectsMove));
                 }
                 else
@@ -128,12 +129,20 @@ namespace Jam
             {
                 if(inputHandler.isPressingTriggerBoard)
                 {
-                    to.x = player.x;
-                    to.y = player.y;
+                    to.x = Mathf.RoundToInt(playerMesh.position.x);
+                    to.y = Mathf.RoundToInt(playerMesh.position.z);
+                    //Debug.Log("To: " + to);
                     if(IsValidMove())
                     {
-                        SetMaterial(defaultMaterial);
-                        StartCoroutine(DelayStateChange(GameFlowState.OpponentCanMove));
+                        if(board.IsMoveACapture(from, to)) // captured a piece, initiate battle
+                        {
+                            gameFlowManager.OpenSceneForBattlefield();
+                        }
+                        else // move is valid, move the piece
+                        {
+                            SetMaterial(defaultMaterial);
+                            StartCoroutine(DelayStateChange(GameFlowState.OpponentCanMove));
+                        }
                     }
                 }
                 else
@@ -176,7 +185,10 @@ namespace Jam
             _moveStart = transform.position;
             _moveEnd = transform.position;
 
-            gameFlowManager.SetState(GameFlowState.OpponentCanMove);
+            if(gameFlowManager.GameFlowState == GameFlowState.PlayerSelectsMoveAndMovesSelf)
+                gameFlowManager.SetState(GameFlowState.PlayerSelectsMove);
+            else if(gameFlowManager.GameFlowState == GameFlowState.PlayerMovesSelf)
+                gameFlowManager.SetState(GameFlowState.PlayerCanMove);
         }
 
         private void SetMaterial(Material material)
@@ -192,12 +204,15 @@ namespace Jam
             gameFlowManager.SetState(GameFlowState.Idle);
             yield return new WaitForSeconds(0.2f);
             gameFlowManager.SetState(state);
+            //Debug.Log("Finish state change to: " + gameFlowManager.GameFlowState);
         }
 
         private bool IsValidMove()
         {
-            board.CheckMove(from, to);
-            return true;
+            /*Debug.Log("Is Valid?");
+            Debug.Log(from);
+            Debug.Log(to);*/
+            return board.CheckMove(from, to);
         }
     }
 }

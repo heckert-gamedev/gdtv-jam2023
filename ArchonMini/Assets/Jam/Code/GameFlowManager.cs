@@ -18,6 +18,8 @@ namespace Jam
         [SerializeField] GameObject boardPlayer;
         [SerializeField] GameObject battlePhase;
 
+        [Header("Settings")]
+        [SerializeField] bool startInBattle;
 
         GameFlowState gameFlowState = GameFlowState.Idle;
 
@@ -34,18 +36,15 @@ namespace Jam
             // the Core prefab is spawned afterwards and fades to black...
             Invoke(nameof(FadeInForDebug), .2f);
             Invoke(nameof(OpenSceneForBoardGame), 1f);
+
+            if(startInBattle)
+                OpenSceneForBattlefield();
         }
 
 
         private void FadeInForDebug()
         {
             fader.FadeIn(.05f);
-        }
-
-
-        private void OpenSceneForBoardGame()
-        {
-            OpenSceneForBoardGame(false);
         }
 
 
