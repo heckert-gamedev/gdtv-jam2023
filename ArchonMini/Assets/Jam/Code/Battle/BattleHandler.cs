@@ -7,6 +7,9 @@ namespace Jam
     public class BattleHandler : MonoBehaviour
     {
 
+        public delegate void BattleEnded();
+        public static event BattleEnded battleEnded;
+
         public enum BattleState {
             Idle, Fighting, PlayerWon, PlayerLost, Draw
         }
@@ -39,7 +42,10 @@ namespace Jam
         public void EndBattle(BattleState state)
         {
             this.state = state;
+            battleEnded?.Invoke();
         }
+
+        
 
 
     }

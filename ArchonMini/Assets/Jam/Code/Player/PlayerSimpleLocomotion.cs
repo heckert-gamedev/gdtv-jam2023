@@ -26,6 +26,9 @@ namespace Jam
         {
             Vector3 myPosition = rb.position;
             rb.MovePosition(myPosition + (moveSpeed * Time.deltaTime) * inputHandler.moveVector);
+            //Quaternion rotationAngle = Mathf.atan2(normalizedVector.y, normalizedVector.x)
+            if(inputHandler.moveVector != Vector3.zero)
+                rb.MoveRotation(Quaternion.LookRotation(inputHandler.moveVector));
         }
 
 
