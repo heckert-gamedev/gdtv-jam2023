@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
 
 namespace Jam
@@ -32,9 +33,14 @@ namespace Jam
             canAttack = true;
 
         }
-
         void Start()
         {
+
+            LODGroup lodGroup = GetComponent<LODGroup>();
+            LOD[] lods = lodGroup.GetLODs();
+            lods[0].renderers[0].material = material;
+            lods[1].renderers[0].material = material;
+            lods[2].renderers[0].material = material;
         }
 
         void Update()
@@ -49,13 +55,22 @@ namespace Jam
 
         private IEnumerator HurtAnimation()
         {
-            MeshRenderer mr = GetComponent<MeshRenderer>();
+            LODGroup lodGroup =GetComponent<LODGroup>();
+            LOD[] lods = lodGroup.GetLODs();
+            lods[0].renderers[0].material = hurtMaterial;
+            lods[1].renderers[0].material = hurtMaterial;
+            lods[2].renderers[0].material = hurtMaterial;
+            yield return new WaitForSeconds(0.25f);
+            lods[0].renderers[0].material = material;
+            lods[1].renderers[0].material = material;
+            lods[2].renderers[0].material = material;
+            /*MeshRenderer mr = GetComponent<MeshRenderer>();
             Material[] mats = mr.materials;
             mats[0] = hurtMaterial;
             mr.materials = mats;
             yield return new WaitForSeconds(0.25f);
             mats[0] = material;
-            mr.materials = mats;
+            mr.materials = mats;*/
         }
 
         public void TakeDamage(float damage)
