@@ -17,11 +17,20 @@ namespace Jam
 
         public GameObject attackBox;
 
+        bool canAttack;
+
         private void Awake()
         {
             if(isPlayer) inputHandler = GetComponent<PlayerInputHandler>();
             else inputHandler = GetComponent<ComputerInputHandler>();
             attackBox = transform.GetChild(0).gameObject;
+            canAttack = true;
+        }
+
+        private void OnEnable()
+        {
+            canAttack = true;
+
         }
 
         void Start()
@@ -30,7 +39,9 @@ namespace Jam
 
         void Update()
         {
-            if(inputHandler.isPressingTriggerBattle)
+            if(battleHandler.state != BattleHandler.BattleState.Fighting) return;
+
+            if (inputHandler.isPressingTriggerBattle)
             {
                 Attack();
             }
@@ -51,7 +62,10 @@ namespace Jam
         {
             health -= damage;
             StartCoroutine(HurtAnimation());
-            if(health <= 0f) Debug.Log("Battle end");
+            if(health <= 0f)
+            {
+                battleHandler.EndBattle(isPlayer ? BattleHandler.BattleState.PlayerLost : BattleHandler.BattleState.PlayerWon);
+            }
         }
 
         IEnumerator DisableAttackBox()
@@ -60,11 +74,25 @@ namespace Jam
             attackBox.SetActive(false);
         }
 
+        IEnumerator AttackCooldown(float time)
+        {
+            yield return new WaitForSeconds(time);
+            canAttack = true;
+        }
+
         private void Attack()
         {
-            if(attackBox.activeSelf) return;
+            if(!canAttack) return;
+            if (attackBox.activeSelf) return;
             attackBox.SetActive(true);
+            canAttack = false;
             StartCoroutine(DisableAttackBox());
+            StartCoroutine(AttackCooldown(1f));
+        }
+
+        public void SetHealth(float health)
+        {
+            this.health = health;
         }
     }
 }

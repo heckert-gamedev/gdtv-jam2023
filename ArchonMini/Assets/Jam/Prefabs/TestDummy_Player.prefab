@@ -36,7 +36,7 @@ Transform:
   m_Children:
   - {fileID: 1268129921041698589}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &575516920153089983
 MeshFilter:
@@ -149,7 +149,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isOrthogonalMovement: 1
-  moveVector: {x: 0, y: 0, z: 0}
 --- !u!114 &8896743979667836463
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -163,9 +162,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
-  movedDelay: 1
   gameFlowManager: {fileID: 0}
   gridsize: {x: 6, y: 6}
+  defaultMaterial: {fileID: 2100000, guid: b491c9b01c0121a9992d8aa5a322422d, type: 2}
+  selectingMaterial: {fileID: 2100000, guid: 7d19ac4e3464e0f45bc2413d472c8d96, type: 2}
 --- !u!1001 &3518353588557678098
 PrefabInstance:
   m_ObjectHideFlags: 0

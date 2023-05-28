@@ -14,12 +14,15 @@ namespace Jam
         [SerializeField] private GameObject _piece;
         [SerializeField] private Material _highlight;
 
+        [SerializeField] Material playerMaterial;
+        [SerializeField] Material enemyMaterial;
+
         private int[,] gridPieces;
 
         private List<GameObject> _pieces;
 
 
-        private void OnEnable()
+        private void Awake()
         {
             gridPieces = new int[_dimensions.x, _dimensions.y];
             CreateBoard();
@@ -53,8 +56,14 @@ namespace Jam
                 grid[i, 0].piece = Instantiate(_piece, grid[i, 0].cellObject.transform.position, Quaternion.identity);
                 grid[i, 0].piece.transform.parent = gameObject.transform;
                 grid[i, 0].containsPlayerPiece = true;
+                Material[] playerMaterials = grid[i, 0].piece.GetComponent<MeshRenderer>().materials;
+                playerMaterials[0] = playerMaterial;
+                grid[i, 0].piece.GetComponent<MeshRenderer>().materials = playerMaterials;
                 grid[i, last].piece = Instantiate(_piece, grid[i, last].cellObject.transform.position, Quaternion.identity);
                 grid[i, last].piece.transform.parent = gameObject.transform;
+                Material[] enemyMaterials = grid[i, 0].piece.GetComponent<MeshRenderer>().materials;
+                enemyMaterials[0] = enemyMaterial;
+                grid[i, last].piece.GetComponent<MeshRenderer>().materials = enemyMaterials;
             }
         }
 
@@ -63,20 +72,25 @@ namespace Jam
 
         }
 
-        public void MovePiece(BoardCell from, BoardCell to)
+        public void MovePiece(Vector2Int from, Vector2Int to)
         {
-
+            grid[to.x, to.y].piece = grid[from.x, from.y].piece;
+            grid[to.x, to.y].piece.transform.position = grid[to.x, to.y].cellObject.transform.position;
+            grid[from.x, from.y].piece = null;
+            grid[to.x, to.y].containsPlayerPiece = grid[from.x, from.y].containsPlayerPiece;
+            grid[from.x, from.y].containsPlayerPiece = false;
         }
 
-        public void RemovePiece(BoardCell cell)
+        public void RemovePiece(Vector2Int cell)
         {
-
+            Destroy(grid[cell.x, cell.y].piece);
+            grid[cell.x, cell.y].piece = null;
         }
 
         public bool CheckMove(Vector2Int start, Vector2Int end)
         {
             if(start.x == end.x && start.y == end.y) return false;
-            //if(!(Mathf.Abs(start.x - end.x) <= 1 && Mathf.Abs(start.y - end.y) <= 1)) return false;
+            if(!(Mathf.Abs(start.x - end.x) <= 1 && Mathf.Abs(start.y - end.y) <= 1)) return false;
             if(IsTileOccupied(end))
             {
                 if(!IsMoveACapture(start, end)) return false;
@@ -84,12 +98,12 @@ namespace Jam
             return true;
         }
 
-        private bool IsTileOccupied(Vector2Int coords)
+        public bool IsTileOccupied(Vector2Int coords)
         {
             return (grid[coords.x, coords.y].piece != null);
         }
 
-        private bool IsTilePlayerPiece(Vector2Int coords)
+        public bool IsTilePlayerPiece(Vector2Int coords)
         {
             return (grid[coords.x, coords.y].containsPlayerPiece);
         }
