@@ -46,7 +46,8 @@ namespace Jam
 
         void Update()
         {
-            if(gameFlowManager.GameFlowState == GameFlowState.Idle) return;
+            //Debug.Log(gameFlowManager.GameFlowState);
+            if(gameFlowManager.GameFlowState == GameFlowState.Idle || gameFlowManager.GameFlowState == GameFlowState.BattleMode) return;
 
             if((gameFlowManager.GameFlowState == GameFlowState.PlayerCanMove) || (gameFlowManager.GameFlowState == GameFlowState.PlayerMovesSelf))
             {
@@ -90,11 +91,14 @@ namespace Jam
             {
                 if(inputHandler.isPressingTriggerBoard)
                 {
-                    SetMaterial(selectingMaterial);
                     from.x = Mathf.RoundToInt(playerMesh.position.x);
                     from.y = Mathf.RoundToInt(playerMesh.position.z);
-                    //Debug.Log("From: " + from);
-                    StartCoroutine(DelayStateChange(GameFlowState.PlayerSelectsMove));
+                    if(board.IsTileOccupied(from) && board.IsTilePlayerPiece(from))
+                    {
+                        SetMaterial(selectingMaterial);
+                        //Debug.Log("From: " + from);
+                        StartCoroutine(DelayStateChange(GameFlowState.PlayerSelectsMove));
+                    }
                 }
                 else
                 {
@@ -136,11 +140,14 @@ namespace Jam
                     {
                         if(board.IsMoveACapture(from, to)) // captured a piece, initiate battle
                         {
-                            gameFlowManager.OpenSceneForBattlefield();
+                            SetMaterial(defaultMaterial);
+                            gameFlowManager.SetState(GameFlowState.Idle);
+                            gameFlowManager.OpenSceneForBattlefield(from, to);
                         }
                         else // move is valid, move the piece
                         {
                             SetMaterial(defaultMaterial);
+                            gameFlowManager.boardInstance.GetComponent<BoardManager>().MovePiece(from, to);
                             StartCoroutine(DelayStateChange(GameFlowState.OpponentCanMove));
                         }
                     }

@@ -27,6 +27,9 @@ namespace Jam
 
         Fader fader;
 
+        Vector2Int piece1;
+        Vector2Int piece2;
+
 
         private void Start()
         {
@@ -35,10 +38,12 @@ namespace Jam
             // In case the scene is loaded first (for development) and we don't wait,
             // the Core prefab is spawned afterwards and fades to black...
             Invoke(nameof(FadeInForDebug), .2f);
-            Invoke(nameof(OpenSceneForBoardGame), 1f);
+            //Invoke(nameof(OpenSceneForBoardGame), 1f);
 
             if(startInBattle)
-                OpenSceneForBattlefield();
+                OpenSceneForBattlefield(new Vector2Int(0, 0), new Vector2Int(0,7));
+            else
+                OpenSceneForBoardGame();
         }
 
 
@@ -69,8 +74,10 @@ namespace Jam
         }
 
 
-        public void OpenSceneForBattlefield(bool withTransition = false)
+        public void OpenSceneForBattlefield(Vector2Int piece1, Vector2Int piece2, bool withTransition = false)
         {
+            this.piece1 = piece1;
+            this.piece2 = piece2;
             // Subscribe event
             BattleHandler.battleEnded += OnBattleEnded;
 
@@ -92,9 +99,25 @@ namespace Jam
         void OnBattleEnded()
         {
             // Resolve outcome
+            //Debug.Log("on battle ended");
+            BattleHandler battleHandler = battlePhase?.GetComponent<BattleHandler>();
+            BoardManager boardManager = boardInstance.GetComponent<BoardManager>();
+            if(battleHandler.state == BattleHandler.BattleState.PlayerWon)
+            {
+                boardManager.RemovePiece(piece2);
+                boardManager.MovePiece(piece1, piece2);
+                battleHandler.state = BattleHandler.BattleState.Fighting;
+                SetState(GameFlowState.OpponentCanMove);
+            }
+            else if (battleHandler.state == BattleHandler.BattleState.PlayerLost)
+            {
+                boardManager.RemovePiece(piece1);
+                boardManager.MovePiece(piece2, piece1);
+                SetState(GameFlowState.OpponentCanMove);
+            }
 
             // Switch back to board game, with transition
-            OpenSceneForBoardGame(true);
+            OpenSceneForBoardGame(false);
         }
 
 
@@ -104,7 +127,6 @@ namespace Jam
             if(gameFlowState == GameFlowState.OpponentCanMove)
             {
                 gameFlowState = GameFlowState.PlayerCanMove;
-                //StartCoroutine(DummyOpponent());
             }
         }
 
