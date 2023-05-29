@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Net;
 using UnityEngine;
 
 namespace Jam
@@ -18,7 +19,7 @@ namespace Jam
         [SerializeField] GameObject firstCombatant;
         [SerializeField] GameObject secondCombatant;
 
-        [SerializeField] GameFlowManager gameFlowManager;
+        public GameFlowManager gameFlowManager;
 
         Vector3 originalFirstPos;
         Vector3 originalSecondPos;
@@ -59,6 +60,9 @@ namespace Jam
         public void EndBattle(BattleState state)
         {
             this.state = state;
+            if(state == BattleState.PlayerLost)
+                gameFlowManager.PlayClip(gameFlowManager.loseBattleClip);
+            else if(state == BattleState.PlayerWon) { }
             StartCoroutine(waitAndEnd());
         }
 

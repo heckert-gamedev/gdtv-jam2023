@@ -56,14 +56,26 @@ namespace Jam
                 grid[i, 0].piece = Instantiate(_piece, grid[i, 0].cellObject.transform.position, Quaternion.identity);
                 grid[i, 0].piece.transform.parent = gameObject.transform;
                 grid[i, 0].containsPlayerPiece = true;
-                Material[] playerMaterials = grid[i, 0].piece.GetComponent<MeshRenderer>().materials;
+                LODGroup lodGroup = grid[i, 0].piece.GetComponent<LODGroup>();
+                LOD[] lods = lodGroup.GetLODs();
+                lods[0].renderers[0].material = playerMaterial;
+                lods[1].renderers[0].material = playerMaterial;
+                lods[2].renderers[0].material = playerMaterial;
+                /*Material[] playerMaterials = grid[i, 0].piece.GetComponent<MeshRenderer>().materials;
                 playerMaterials[0] = playerMaterial;
-                grid[i, 0].piece.GetComponent<MeshRenderer>().materials = playerMaterials;
+                grid[i, 0].piece.GetComponent<MeshRenderer>().materials = playerMaterials;*/
                 grid[i, last].piece = Instantiate(_piece, grid[i, last].cellObject.transform.position, Quaternion.identity);
                 grid[i, last].piece.transform.parent = gameObject.transform;
-                Material[] enemyMaterials = grid[i, 0].piece.GetComponent<MeshRenderer>().materials;
+
+                lodGroup = grid[i, last].piece.GetComponent<LODGroup>();
+                lods = lodGroup.GetLODs();
+                lods[0].renderers[0].material = enemyMaterial;
+                lods[1].renderers[0].material = enemyMaterial;
+                lods[2].renderers[0].material = enemyMaterial;
+                grid[i, last].piece.transform.rotation = Quaternion.Euler(0, 180f, 0);
+                /*Material[] enemyMaterials = grid[i, 0].piece.GetComponent<MeshRenderer>().materials;
                 enemyMaterials[0] = enemyMaterial;
-                grid[i, last].piece.GetComponent<MeshRenderer>().materials = enemyMaterials;
+                grid[i, last].piece.GetComponent<MeshRenderer>().materials = enemyMaterials;*/
             }
         }
 

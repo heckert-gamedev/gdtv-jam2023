@@ -22,10 +22,9 @@ namespace Jam
         }
 
 
-        void Update()
+        void FixedUpdate()
         {
-            Vector3 myPosition = rb.position;
-            rb.MovePosition(myPosition + (moveSpeed * Time.deltaTime) * inputHandler.moveVector);
+            rb.MovePosition(rb.position + moveSpeed * Time.fixedDeltaTime * inputHandler.moveVector);
             //Quaternion rotationAngle = Mathf.atan2(normalizedVector.y, normalizedVector.x)
             if(inputHandler.moveVector != Vector3.zero)
                 rb.MoveRotation(Quaternion.LookRotation(inputHandler.moveVector));
