@@ -95,6 +95,7 @@ namespace Jam
                     from.y = Mathf.RoundToInt(playerMesh.position.z);
                     if(board.IsTileOccupied(from) && board.IsTilePlayerPiece(from))
                     {
+                        gameFlowManager.PlayClip(gameFlowManager.selectPieceClip);
                         SetMaterial(selectingMaterial);
                         //Debug.Log("From: " + from);
                         StartCoroutine(DelayStateChange(GameFlowState.PlayerSelectsMove));
@@ -138,6 +139,7 @@ namespace Jam
                     //Debug.Log("To: " + to);
                     if(IsValidMove())
                     {
+                        gameFlowManager.PlayClip(gameFlowManager.movePieceClip);
                         if(board.IsMoveACapture(from, to)) // captured a piece, initiate battle
                         {
                             SetMaterial(defaultMaterial);

@@ -30,9 +30,19 @@ namespace Jam
         Vector2Int piece1;
         Vector2Int piece2;
 
+        public AudioSource audioSource;
+
+        public AudioClip winBattleClip;
+        public AudioClip loseBattleClip;
+        public AudioClip loseGameClip;
+        public AudioClip attackClip;
+        public AudioClip selectPieceClip;
+        public AudioClip movePieceClip;
+
 
         private void Start()
         {
+            audioSource = GetComponent<AudioSource>();
             fader = FindObjectOfType<Fader>();
 
             // In case the scene is loaded first (for development) and we don't wait,
@@ -136,6 +146,12 @@ namespace Jam
         {
             yield return new WaitForSeconds(1f);
             gameFlowState = GameFlowState.PlayerCanMove;
+        }
+
+        public void PlayClip(AudioClip clip)
+        {
+            audioSource.clip = clip;
+            audioSource.Play();
         }
 
     }

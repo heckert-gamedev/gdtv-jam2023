@@ -99,6 +99,7 @@ namespace Jam
         {
             if(!canAttack) return;
             if (attackBox.activeSelf) return;
+            battleHandler.gameFlowManager.PlayClip(battleHandler.gameFlowManager.attackClip);
             attackBox.SetActive(true);
             canAttack = false;
             StartCoroutine(DisableAttackBox());
